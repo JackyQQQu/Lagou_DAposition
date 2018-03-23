@@ -41,7 +41,7 @@ class DataspiderSpider(scrapy.Spider):
     page = 1
     form_data = {
         'first': 'true',
-        'city': '苏州',
+        'city': '城市名',
         'pn': str(page),  # 页数
         'kd': '数据分析',  # 关键词
     }
@@ -100,7 +100,7 @@ class DataspiderSpider(scrapy.Spider):
                     headers=self.headers,
                     formdata={
                         'first': 'true',
-                        'city': '苏州',
+                        'city': '城市名',
                         'pn': str(self.page),  # 页数
                         'kd': '数据分析',  # 关键词
                     },
