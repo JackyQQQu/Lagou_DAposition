@@ -1,5 +1,5 @@
 # 拉勾网数据分析职位数据分析项目
-## 目录清单：
+## 目录清单
 1.scrapy——scrapy爬虫项目代码文件   
 2.apriori.py——apriori算法源码（获取自互联网）     
 3.Data_Process.py——数据处理过程代码文件      

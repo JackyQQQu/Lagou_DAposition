@@ -5,7 +5,7 @@ import pandas as pda
 import matplotlib.pyplot as pp
 import matplotlib.pylab as pyl
 import re
-from Lagou_DAposition.apriori import *
+# from Lagou_DAposition.apriori import *
 import jieba
 from wordcloud import WordCloud, STOPWORDS
 from scipy.misc import imread
@@ -13,22 +13,23 @@ from scipy.misc import imread
 pp.rcParams['font.sans-serif'] = ['SimHei']   # 用来正常显示中文标签
 pp.rcParams['axes.unicode_minus'] = False   # 用来正常显示负号
 # 读取数据
-data = pda.read_excel("E:\\编程学习\\Project\\lagou\\lagouposition.xlsx")
-data1 = data.T
-# print(len(data))
+data0 = pda.read_excel("E:\\编程学习\\Project\\lagou\\lagouposition.xlsx")
+data1 = data0.T
+# print(len(data0))
 
 # 数据清洗,去除缺失值
 salary = data1.values[8] # 薪酬
 city = data1.values[3] # 城市
 companySize = data1.values[5] # 公司规模
-for i in range(0, len(data)):
+for i in range(0, len(data0)):
     if len(salary[i] or city[i] or companySize[i]) == 0:
         print(salary[i], city[i], companySize[i])
-        data.drop(i, axis=0, inplace=True)
-# print(len(data))
+        data0.drop(i, axis=0, inplace=True)
+data1 = data0.T
+# print(len(data1))
 
 # 通过饼图分析需求数据分析岗位的公司发展情况所占比例
-financestage = data1.values[6] # 融资情况
+financestage = data1.values[6]  # 融资情况
 la1 = u"不需要融资", u"未融资", u"天使轮"
 la2 = u"A轮", u"B轮", u"C轮", u"D轮及以上"
 la3 = u"初创型公司", u"发展型公司", u"上市公司"
@@ -60,7 +61,7 @@ explode2 = (0, 0, 0, 0)
 explode3 = (0, 0.1, 0)
 
 # 分析数据分析岗位对不同学历所占的比重
-education = data1.values[7] # 学历
+education = data1.values[7]  # 学历
 ed = education.tolist()
 ed_s = set(ed)
 ed_data = np.array(range(len(ed_s)))
@@ -71,9 +72,9 @@ for edt in ed_s:
     labels4.append(edt)
     i4 += 1
 ed_data = ed_data/len(education)
-explode4 = (0, 0, 0, 0, 0)
+explode4 = (0, 0, 0, 0, 0.1)
 # 分析数据分析岗位对不同工作年限所占的比重
-workYear = data1.values[11] # 工作年限
+workYear = data1.values[11]  # 工作年限
 wy = workYear.tolist()
 wy_s = set(wy)
 wy_data = np.array(range(len(wy_s)))
@@ -86,10 +87,8 @@ for wyt in wy_s:
 wy_data = wy_data/len(workYear)
 explode5 = (0, 0, 0, 0, 0, 0)
 
-# pp.pie(wy_data, explode=explode5, autopct="%1.1f%%", labels=labels5, startangle=90, radius=1)
-# pp.axis("equal")
-# pp.show()
-# pp.savefig('E:\\编程学习\\Project\\lagou\\p5.png', format='png', bbox_inches='tight', transparent=True, dpi=600)
+pp.pie(wy_data, explode=explode5, autopct="%1.1f%%", labels=labels5, startangle=130, radius=1)
+pp.axis("equal")
 
 # 分析不同规模企业所占的比重
 cs = companySize.tolist()
@@ -105,8 +104,7 @@ for cst in cs_s:
 
 # pyl.barh(cs_width, cs_data, color="g", height=0.5)
 # pyl.yticks(cs_width, labels6)
-# pyl.show()
-# pyl.savefig('E:\\编程学习\\Project\\lagou\\p6.png', format='png', bbox_inches='tight', transparent=True, dpi=600)
+
 
 # 分析不同城市对于数据分析职位的需求量
 cy = city.tolist()
@@ -139,8 +137,6 @@ for itf in idf_s:
 
 # pyl.bar(cy_width, cy_data, color="b")
 # pyl.xticks(cy_width, labels7)
-# pyl.show()
-# pyl.savefig('E:\\编程学习\\Project\\lagou\\p8.png', format='png', bbox_inches='tight', transparent=True, dpi=600)
 
 # 分析不同薪资所占的分布情况
 # 分割薪资为最大值和最小值
@@ -171,8 +167,6 @@ for t in range(0, len(sy_means)):
 bins = np.arange(1, 80, 5)
 # pyl.xlabel("平均薪资（单位：K）")
 # pyl.hist(sy_means, bins, color="m", histtype="bar")
-# pyl.show()
-# pyl.savefig('E:\\编程学习\\Project\\lagou\\p9.png', format='png', bbox_inches='tight', transparent=True, dpi=600)
 
 # 分析数据分析职位薪资水平和公司发展情况、学历水平、城市、工作年限之间的关联程度
 # 处理公司发展水平信息
@@ -332,7 +326,7 @@ fs_sy_df.columns = la_fs
 # pp.ylabel("薪资水平（单位：K）")
 
 # pp.show()
-# pp.savefig('E:\\编程学习\\Project\\lagou\\p13.png', format='png', bbox_inches='tight', transparent=False, dpi=600)
+# pp.savefig('E:\\编程学习\\Project\\lagou\\p5.png', format='png', bbox_inches='tight', transparent=True, dpi=600)
 
 # 职位诱惑和标签词云
 pic = imread("E:\\编程学习\\Project\\lagou\\pic.png")
